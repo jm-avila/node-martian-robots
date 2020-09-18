@@ -5,14 +5,7 @@ const {
   validateIfInGrid,
 } = require("./validation");
 
-const {
-  state,
-  validOrientations,
-  validInstructions,
-  unsetPosition,
-} = require("./values");
-
-//  Simple script approach
+const { state, validInstructions, unsetPosition } = require("./values");
 
 function grid(upperRightCoordinates) {
   const { x, y } = upperRightCoordinates;
@@ -23,7 +16,7 @@ function grid(upperRightCoordinates) {
 function initPosition(initialCoordinates) {
   const { x, y, o } = initialCoordinates;
   validateCoordinatesInput(x, y);
-  validateOrientationInput(o, validOrientations);
+  validateOrientationInput(o);
 
   setInitialState();
 
@@ -39,7 +32,7 @@ function setInitialState() {
 
 function instructions(instructionsString) {
   const instructionsArray = instructionsString.split("");
-  validateInstructions(instructionsArray, validInstructions);
+  validateInstructions(instructionsArray);
 
   for (let i = 0; i < instructionsArray.length; i++) {
     if (state.lost) break;
