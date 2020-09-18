@@ -35,23 +35,7 @@ const validInstructions = {
   },
 };
 
-const unsetPosition = {
-  x: null,
-  y: null,
-  o: null,
-};
-
-const state = {
-  grid: [],
-  initPosition: { ...unsetPosition },
-  currentPosition: { ...unsetPosition },
-  lostCoordinates: [],
-  lost: false,
-};
-
 module.exports = {
   validOrientations,
   validInstructions,
-  unsetPosition,
-  state,
 };
