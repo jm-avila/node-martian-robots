@@ -2,32 +2,39 @@ const {
   validateCoordinatesInput,
   validateOrientationInput,
   validateInstructions,
+  validateIfInGrid,
 } = require("./validation");
 
 const {
+  state,
   validOrientations,
   validInstructions,
   unsetPosition,
-  state,
 } = require("./values");
 
 //  Simple script approach
 
-function grid(x, y) {
+function grid(upperRightCoordinates) {
+  const { x, y } = upperRightCoordinates;
   validateCoordinatesInput(x, y);
   state.grid = [x, y];
 }
 
-function initPosition(x, y, o) {
+function initPosition(initialCoordinates) {
+  const { x, y, o } = initialCoordinates;
   validateCoordinatesInput(x, y);
   validateOrientationInput(o, validOrientations);
 
+  setInitialState();
+
+  state.initPosition = initialCoordinates;
+  state.currentPosition = initialCoordinates;
+}
+
+function setInitialState() {
   state.initPosition = { ...unsetPosition };
   state.currentPosition = { ...unsetPosition };
   state.lost = false;
-
-  state.initPosition = { x, y, o };
-  state.currentPosition = { x, y, o };
 }
 
 function instructions(instructionsString) {
@@ -35,52 +42,14 @@ function instructions(instructionsString) {
   validateInstructions(instructionsArray, validInstructions);
 
   for (let i = 0; i < instructionsArray.length; i++) {
-    if (state.lost) {
-      break;
-    }
+    if (state.lost) break;
 
     const currentInstruction = instructionsArray[i];
 
-    if (validInstructions.turn[currentInstruction]) {
-      turn(currentInstruction);
-    } else {
-      move(currentInstruction);
-    }
+    validInstructions.turn[currentInstruction]
+      ? turn(currentInstruction)
+      : move();
   }
-}
-
-function move() {
-  const currentOrientation = state.currentPosition.o;
-  const currentMovement = validInstructions.move.change[currentOrientation];
-
-  if (currentMovement.axis === "x") {
-    const newXPosition = state.currentPosition.x + currentMovement.val;
-    if (validateIfInGrid(newXPosition, state.currentPosition.y)) {
-      state.currentPosition.x = newXPosition;
-    }
-  } else {
-    const newYPosition = state.currentPosition.y + currentMovement.val;
-    if (validateIfInGrid(state.currentPosition.x, newYPosition)) {
-      state.currentPosition.y = newYPosition;
-    }
-  }
-}
-
-function validateIfInGrid(x, y) {
-  if (x <= state.grid[0] && y <= state.grid[1]) return true;
-
-  const coordinatesOfALostCoordinates = state.lostCoordinates.some(
-    ({ x: lostX, y: lostY }) =>
-      lostX === state.currentPosition.x && lostY === state.currentPosition.y
-  );
-
-  if (coordinatesOfALostCoordinates) {
-    return false;
-  }
-
-  state.lostCoordinates.push(state.currentPosition);
-  state.lost = true;
-  return false;
 }
 
 function turn(instructionString) {
@@ -89,23 +58,48 @@ function turn(instructionString) {
   state.currentPosition.o = newOrientation;
 }
 
-grid(5, 3);
+function move() {
+  const newCoordinates = getNewCoordinates(state.currentPosition);
+
+  if (!validateIfInGrid(newCoordinates, state)) return;
+
+  state.currentPosition.x = newCoordinates.x;
+  state.currentPosition.y = newCoordinates.y;
+}
+
+function getNewCoordinates(currentPosition) {
+  const { x, y, o } = currentPosition;
+  const { axis, val } = validInstructions.move.change[o];
+
+  if (axis === "x")
+    return {
+      x: x + val,
+      y,
+    };
+
+  return {
+    x,
+    y: y + val,
+  };
+}
+
+grid({ x: 5, y: 3 });
 // First Robot
 console.log("First Robot");
 
-initPosition(1, 1, "E");
+initPosition({ x: 1, y: 1, o: "E" });
 instructions("RFRFRFRF");
 console.log(state.currentPosition, state.lost);
 
 // Second Robot
 console.log("Second Robot");
 
-initPosition(3, 2, "N");
+initPosition({ x: 3, y: 2, o: "N" });
 instructions("FRRFLLFFRRFLL");
 console.log(state.currentPosition, state.lost);
 
 // Third Robot
 console.log("Third Robot");
-initPosition(0, 3, "W");
+initPosition({ x: 0, y: 3, o: "W" });
 instructions("LLFFFLFLFL");
 console.log(state.currentPosition, state.lost);
