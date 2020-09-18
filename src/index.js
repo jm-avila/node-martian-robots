@@ -1,18 +1,17 @@
-const generateGrid = require("./gridLogic");
+const grid = require("./grid");
 const robotsData = [
   {
     posStr: { x: 1, y: 1, o: "E" },
-    insStr: "RFRFRFRF",
+    instStr: "RFRFRFRF",
   },
   {
     posStr: { x: 3, y: 2, o: "N" },
-    insStr: "FRRFLLFFRRFLL",
+    instStr: "FRRFLLFFRRFLL",
   },
   {
     posStr: { x: 0, y: 3, o: "W" },
-    insStr: "LLFFFLFLFL",
+    instStr: "LLFFFLFLFL",
   },
 ];
 
-const robotGrid = generateGrid();
-console.log(robotGrid({ x: 5, y: 3 }, robotsData));
+console.log(grid({ x: 5, y: 3 }, robotsData));
