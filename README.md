@@ -27,7 +27,7 @@
 - W + left = S
 - W + right = N
 - E + left = N
-- E + right = W
+- E + right = S
 
 #### Coordinate displacement according to the Orientation
 
