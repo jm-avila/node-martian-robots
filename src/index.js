@@ -1,53 +1,17 @@
+const {
+  validateCoordinatesInput,
+  validateOrientationInput,
+  validateInstructions,
+} = require("./validation");
+
+const {
+  validOrientations,
+  validInstructions,
+  unsetPosition,
+  state,
+} = require("./values");
+
 //  Simple script approach
-
-const validOrientations = {
-  N: "N",
-  S: "S",
-  W: "W",
-  E: "E",
-};
-
-const validInstructions = {
-  turn: {
-    L: "L",
-    R: "R",
-    change: {
-      L: {
-        N: "W",
-        S: "E",
-        W: "S",
-        E: "N",
-      },
-      R: {
-        N: "E",
-        S: "W",
-        W: "N",
-        E: "S",
-      },
-    },
-  },
-  move: {
-    F: "F",
-    change: {
-      N: { axis: "y", val: 1 },
-      S: { axis: "y", val: -1 },
-      W: { axis: "x", val: -1 },
-      E: { axis: "x", val: 1 },
-    },
-  },
-};
-
-const unsetPosition = {
-  x: null,
-  y: null,
-  o: null,
-};
-
-const state = {
-  grid: [],
-  initPosition: { ...unsetPosition },
-  currentPosition: { ...unsetPosition },
-};
 
 function grid(x, y) {
   validateCoordinatesInput(x, y);
@@ -56,24 +20,32 @@ function grid(x, y) {
 
 function initPosition(x, y, o) {
   validateCoordinatesInput(x, y);
-  validateOrientationInput(o);
+  validateOrientationInput(o, validOrientations);
+
+  state.initPosition = { ...unsetPosition };
+  state.currentPosition = { ...unsetPosition };
+  state.lost = false;
+
   state.initPosition = { x, y, o };
   state.currentPosition = { x, y, o };
 }
 
 function instructions(instructionsString) {
   const instructionsArray = instructionsString.split("");
-  console.log(state.currentPosition);
+  validateInstructions(instructionsArray, validInstructions);
 
-  validateInstructions(instructionsArray);
   for (let i = 0; i < instructionsArray.length; i++) {
+    if (state.lost) {
+      break;
+    }
+
     const currentInstruction = instructionsArray[i];
+
     if (validInstructions.turn[currentInstruction]) {
       turn(currentInstruction);
     } else {
       move(currentInstruction);
     }
-    console.log(i, state.currentPosition);
   }
 }
 
@@ -82,10 +54,33 @@ function move() {
   const currentMovement = validInstructions.move.change[currentOrientation];
 
   if (currentMovement.axis === "x") {
-    state.currentPosition.x += currentMovement.val;
+    const newXPosition = state.currentPosition.x + currentMovement.val;
+    if (validateIfInGrid(newXPosition, state.currentPosition.y)) {
+      state.currentPosition.x = newXPosition;
+    }
   } else {
-    state.currentPosition.y += currentMovement.val;
+    const newYPosition = state.currentPosition.y + currentMovement.val;
+    if (validateIfInGrid(state.currentPosition.x, newYPosition)) {
+      state.currentPosition.y = newYPosition;
+    }
   }
+}
+
+function validateIfInGrid(x, y) {
+  if (x <= state.grid[0] && y <= state.grid[1]) return true;
+
+  const coordinatesOfALostCoordinates = state.lostCoordinates.some(
+    ({ x: lostX, y: lostY }) =>
+      lostX === state.currentPosition.x && lostY === state.currentPosition.y
+  );
+
+  if (coordinatesOfALostCoordinates) {
+    return false;
+  }
+
+  state.lostCoordinates.push(state.currentPosition);
+  state.lost = true;
+  return false;
 }
 
 function turn(instructionString) {
@@ -94,34 +89,23 @@ function turn(instructionString) {
   state.currentPosition.o = newOrientation;
 }
 
-function validateCoordinatesInput(x, y) {
-  if (x > 50 || y > 50) {
-    throw "The maximum grid sizes is 50 by 50.";
-  }
-}
-
-function validateOrientationInput(o) {
-  if (!o) {
-    throw "Orientation is mandatory.";
-  }
-
-  if (!validOrientations[o]) {
-    throw "Please input a valid orientation.";
-  }
-}
-
-function validateInstructions(instructions) {
-  if (
-    instructions.some(
-      (str) => !validInstructions.move[str] && !validInstructions.turn[str]
-    )
-  ) {
-    throw "Please input a valid instruction.";
-  }
-}
-
-// First Input
 grid(5, 3);
+// First Robot
+console.log("First Robot");
+
 initPosition(1, 1, "E");
 instructions("RFRFRFRF");
-console.log(state);
+console.log(state.currentPosition, state.lost);
+
+// Second Robot
+console.log("Second Robot");
+
+initPosition(3, 2, "N");
+instructions("FRRFLLFFRRFLL");
+console.log(state.currentPosition, state.lost);
+
+// Third Robot
+console.log("Third Robot");
+initPosition(0, 3, "W");
+instructions("LLFFFLFLFL");
+console.log(state.currentPosition, state.lost);
