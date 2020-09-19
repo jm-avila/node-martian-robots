@@ -2,13 +2,13 @@
 
 ### Grid
 
-- rectangular cartesian coordinate plane.
-- given that the first input is upper-right coordinates the size will be determined by it but always within the range 0 <= coordinate <= 50.
+- rectangular cartesian coordinate plane with size lower limit (0,0) and upper limit (x <= 50, y <= 50).
+- The upper limit is set by the user input first line.
 
 ### Robot Positions
 
 - grid coordinate (x, y)
-- orientation [N, S, E, W]
+- orientation: N, S, E, W
 
 ### Robot Displacement
 
@@ -24,24 +24,24 @@
 - N + right = E
 - S + left = E
 - S + right = W
-- W + left = S
-- W + right = N
 - E + left = N
 - E + right = S
+- W + left = S
+- W + right = N
 
 #### Coordinate displacement according to the Orientation
 
 - N = x + 1
 - S = x - 1
-- W = y - 1
 - E = y + 1
+- W = y - 1
 
 #### Grid Limits
 
 - N : x = input
 - S : x = 0
-- W : y = 0
 - E : y = input
+- W : y = 0
 
 ### Input
 
