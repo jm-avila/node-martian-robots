@@ -1,8 +1,5 @@
 module.exports = function formatTextBody(str) {
-  const strWitoutQuotes = str.slice(1, -2);
-  const inputsArray = strWitoutQuotes
-    .split("\n")
-    .map((item) => item.split(" "));
+  const inputsArray = str.split("\n").map((item) => item.split(" "));
 
   const gridFormatedInput = inputsArray.reduce(
     (formatedInput, instruction, i) => {
