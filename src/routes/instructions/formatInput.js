@@ -1,4 +1,8 @@
-module.exports = function formatTextBody(str) {
+function formatInput(body) {
+  return typeof body === typeof "" ? formatPlainTextBody(body) : body;
+}
+
+function formatPlainTextBody(str) {
   const inputsArray = str.split("\n").map((item) => item.split(" "));
 
   const gridFormatedInput = inputsArray.reduce(
@@ -26,4 +30,6 @@ module.exports = function formatTextBody(str) {
   );
 
   return gridFormatedInput;
-};
+}
+
+module.exports = formatInput;
