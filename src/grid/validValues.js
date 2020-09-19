@@ -5,6 +5,7 @@ const validOrientations = {
   E: "E",
 };
 
+// To add new behaviours just add the instructions at the validInstructions object.
 const validInstructions = {
   turn: {
     L: "L",
