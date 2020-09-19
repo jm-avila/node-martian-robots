@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { home, instructions } = require("./routes");
+require("./mongoose");
 
 const app = express();
 
