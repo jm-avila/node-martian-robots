@@ -1,4 +1,4 @@
-const validateInput = require("../validateInput");
+const validateInput = require("./validateInput");
 const executeInstructions = require("./executeInstructions");
 const {
   generateState,

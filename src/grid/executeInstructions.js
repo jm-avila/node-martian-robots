@@ -1,4 +1,4 @@
-const { validInstructions } = require("../values");
+const { validInstructions } = require("./validValues");
 
 function executeInstructions(instructions, state) {
   for (let i = 0; i < instructions.length; i++) {

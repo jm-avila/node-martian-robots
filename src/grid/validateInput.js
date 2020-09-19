@@ -1,4 +1,4 @@
-const { validOrientations, validInstructions } = require("./values");
+const { validOrientations, validInstructions } = require("./validValues");
 
 function validateInput(gridUpperLimit, robots) {
   validateCoordinatesInput(gridUpperLimit);
