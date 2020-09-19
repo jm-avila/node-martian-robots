@@ -1,17 +1,21 @@
-const grid = require("./grid");
-const robotsData = [
-  {
-    posStr: { x: 1, y: 1, o: "E" },
-    instStr: "RFRFRFRF",
-  },
-  {
-    posStr: { x: 3, y: 2, o: "N" },
-    instStr: "FRRFLLFFRRFLL",
-  },
-  {
-    posStr: { x: 0, y: 3, o: "W" },
-    instStr: "LLFFFLFLFL",
-  },
-];
+require("dotenv").config();
+const express = require("express");
+const http = require("http");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-console.log(grid({ x: 5, y: 3 }, robotsData));
+const app = express();
+const port = process.env.PORT;
+
+app.use(bodyParser.json());
+app.use(cors());
+
+const server = http.createServer(app);
+
+app.get("/", (req, res, next) => {
+  res.send("<h1>Welcom to Martian Robots</h1>");
+});
+
+server.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
