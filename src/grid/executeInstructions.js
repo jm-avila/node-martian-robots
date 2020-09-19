@@ -46,7 +46,9 @@ function getNewCoordinates(currentPosition) {
 }
 
 function coordinatesInGridLimits({ x, y }, state) {
-  return x <= state.grid.x && y <= state.grid.y;
+  const upperLimits = x <= state.grid.x && y <= state.grid.y;
+  const lowerLimits = x >= 0 && y >= 0;
+  return upperLimits && lowerLimits;
 }
 
 // updateLostRobotCoordinates: When a robot next movement is off the grid check if it's the first robot lost at that coordinate and update as lost and include in the lostRobotsCoordinates list only if it's the first one.
