@@ -21,45 +21,43 @@ function turn(instructionString, state) {
 
 function move(state) {
   const newCoordinates = getNewCoordinates(state.currentPosition);
+  const newCoordinatesWithinGrid = coordinatesInGridLimits(
+    newCoordinates,
+    state
+  );
 
-  if (coordinatesInGridLimits(newCoordinates, state)) {
+  if (newCoordinatesWithinGrid) {
     state.currentPosition.x = newCoordinates.x;
     state.currentPosition.y = newCoordinates.y;
+  } else {
+    updateLostRobotCoordinates(state);
   }
 }
 
 function getNewCoordinates(currentPosition) {
   const { x, y, o } = currentPosition;
   const { axis, val } = validInstructions.move.change[o];
-
-  if (axis === "x")
-    return {
-      x: x + val,
-      y,
-    };
-
-  return {
+  const newCoordinates = {
     x,
-    y: y + val,
+    y,
   };
+  newCoordinates[axis] += val;
+  return newCoordinates;
 }
 
 function coordinatesInGridLimits({ x, y }, state) {
-  if (x <= state.grid.x && y <= state.grid.y) return true;
-
-  updateIfLostRobot(state);
-
-  return false;
+  return x <= state.grid.x && y <= state.grid.y;
 }
 
-function updateIfLostRobot(state) {
-  const isLost = state.lostCoordinates.some(
+// updateLostRobotCoordinates: When a robot next movement is off the grid check if it's the first robot lost at that coordinate and update as lost and include in the lostRobotsCoordinates list only if it's the first one.
+function updateLostRobotCoordinates(state) {
+  const firstLost = state.lostRobotsCoordinates.some(
     ({ x: lostX, y: lostY }) =>
       lostX === state.currentPosition.x && lostY === state.currentPosition.y
   );
 
-  if (isLost) {
-    state.lostCoordinates.push(state.currentPosition);
+  if (!firstLost) {
+    state.lostRobotsCoordinates.push(state.currentPosition);
     state.lost = true;
   }
 }

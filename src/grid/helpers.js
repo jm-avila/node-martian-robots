@@ -15,7 +15,7 @@ function generateState() {
       y: null,
       o: null,
     },
-    lostCoordinates: [],
+    lostRobotsCoordinates: [],
     lost: false,
   };
 
