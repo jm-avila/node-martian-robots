@@ -2,19 +2,19 @@ const validateInput = require("../validateInput");
 const executeInstructions = require("./executeInstructions");
 const {
   generateState,
-  grid,
+  setGridUpperRightCoordinates,
   setInitialPosition,
-  formatValue,
+  formatResult,
 } = require("./helpers");
 
 module.exports = function (gridUpperLimit, robots) {
   validateInput(gridUpperLimit, robots);
   const state = generateState();
-  grid(gridUpperLimit, state);
+  setGridUpperRightCoordinates(gridUpperLimit, state);
 
   return robots.map(({ posStr, instStr }) => {
     setInitialPosition(posStr, state);
     executeInstructions(instStr, state);
-    return formatValue(state);
+    return formatResult(state);
   });
 };

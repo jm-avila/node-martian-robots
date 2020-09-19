@@ -1,9 +1,3 @@
-function formatValue(state) {
-  const { x, y, o } = state.currentPosition;
-  const lostStr = state.lost ? "LOST" : "";
-  return `${x} ${y} ${o} ${lostStr}`.trim();
-}
-
 function generateState() {
   const state = {
     grid: {
@@ -22,19 +16,26 @@ function generateState() {
   return state;
 }
 
-function grid(upperRightCoordinates, state) {
+function setGridUpperRightCoordinates(upperRightCoordinates, state) {
   const { x, y } = upperRightCoordinates;
   state.grid = { x, y };
 }
 
 function setInitialPosition(initialCoordinates, state) {
-  cleanState(state);
+  state.currentPosition = {};
+  state.lost = false;
   state.currentPosition = initialCoordinates;
 }
 
-function cleanState(state) {
-  state.currentPosition = {};
-  state.lost = false;
+function formatResult(state) {
+  const { x, y, o } = state.currentPosition;
+  const lost = state.lost;
+  return { x, y, o, lost };
 }
 
-module.exports = { formatValue, generateState, grid, setInitialPosition };
+module.exports = {
+  generateState,
+  setGridUpperRightCoordinates,
+  setInitialPosition,
+  formatResult,
+};
