@@ -2,6 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { home, instructions, logs } = require("./routes");
+const { shouldConnectToDB, connectToDB } = require("./mongoose");
+
+if (shouldConnectToDB()) connectToDB();
 
 const app = express();
 
