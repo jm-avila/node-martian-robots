@@ -4,12 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run jest --coverage --runInBand --detectOpenHandles",
+    "test": "jest",
     "start": "node src/index.js",
     "mongod:start": "mongod",
     "dev": "nodemon src/index.js",
-    "mongod:dev": "mongod",
-    "jest": "jest"
+    "mongod:dev": "mongod"
   },
   "repository": {
     "type": "git",
