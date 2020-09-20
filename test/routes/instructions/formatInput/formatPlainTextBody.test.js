@@ -22,7 +22,7 @@ describe("Input-Output Test", () => {
         },
       ],
     };
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
   it('transform string into the input used at the grid test "Two Robots move to the same border, the first is lost and the second not."', () => {
@@ -36,7 +36,7 @@ describe("Input-Output Test", () => {
         instStr: "FFF",
       })),
     };
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
   it('transform string into the input used at the grid test  "A Robot moves through all the points of the grid without getting lost."', () => {
@@ -51,6 +51,6 @@ describe("Input-Output Test", () => {
         },
       ],
     };
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 });

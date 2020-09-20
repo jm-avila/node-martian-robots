@@ -22,7 +22,7 @@ describe("Input-Output Test", () => {
         },
       ],
     };
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
   it("When the input is of the type object, the input is returned without been modified.", () => {
@@ -44,6 +44,6 @@ describe("Input-Output Test", () => {
       ],
     };
     const output = formatInput(input);
-    expect(output).toMatchObject(input);
+    expect(output).toEqual(input);
   });
 });
