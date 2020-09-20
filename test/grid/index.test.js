@@ -23,7 +23,7 @@ describe("Input-Output Test", () => {
       { x: 3, y: 3, o: "N", lost: true },
       { x: 2, y: 3, o: "S", lost: false },
     ];
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
   it("Two Robots move to the same border, the first is lost and the second not.", () => {
@@ -43,7 +43,7 @@ describe("Input-Output Test", () => {
       { x: 0, y: 2, o: "W", lost: true },
       { x: 0, y: 2, o: "W", lost: false },
     ];
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 
   it("A Robot moves through all the points of the grid without getting lost.", () => {
@@ -56,6 +56,6 @@ describe("Input-Output Test", () => {
     ];
     const output = grid(gridUpperLimit, robotsData);
     const expectedOutput = [{ x: 1, y: 3, o: "W", lost: false }];
-    expect(output).toMatchObject(expectedOutput);
+    expect(output).toEqual(expectedOutput);
   });
 });
