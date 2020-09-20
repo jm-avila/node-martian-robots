@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run jest --coverage --runInBand --detectOpenHandles",
     "start": "node src/index.js",
     "mongod:start": "mongod",
     "dev": "nodemon src/index.js",
-    "mongod:dev": "mongod"
+    "mongod:dev": "mongod",
+    "jest": "jest"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "homepage": "https://github.com/jm-avila/node-martian-robots#readme",
   "devDependencies": {
     "install": "^0.13.0",
+    "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "npm": "^6.14.8"
   },
