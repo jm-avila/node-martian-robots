@@ -5,10 +5,10 @@ const insertLog = require("./insertLog");
 
 const grid = require("../../grid");
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const { gridUpperLimit, robotsData } = formatInput(req.body);
   const output = grid(gridUpperLimit, robotsData);
-  insertLog(output);
+  await insertLog(output);
   res.send(formatOutput(output));
 });
 
