@@ -1,4 +1,3 @@
-require("dotenv").config();
 const {
   connectToDB,
   disconnectFromDB,
