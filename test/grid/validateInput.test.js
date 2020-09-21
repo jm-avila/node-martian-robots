@@ -45,7 +45,7 @@ describe("Input-Output Test for validateInput function", () => {
     expect(t2).toThrow();
   });
 
-  it("given a valid grid size, if all of the robots objects have valid instructions, no error is thrown", () => {
+  it("given a valid grid size, if all of the robots objects have valid instructions, no error is thrown but if any has an invalid instruction an error is thrown. ", () => {
     const gridUpperLimit = { x: 50, y: 50 };
 
     const instruction =
@@ -62,14 +62,18 @@ describe("Input-Output Test for validateInput function", () => {
 
     const robots = [robot, robot, robot];
 
-    const t1 = () => {
+    const t = () => {
       validateInput(gridUpperLimit, robots);
     };
 
-    expect(t1).not.toThrow();
+    expect(t).not.toThrow();
+
+    robots[0].instStr += "X";
+
+    expect(t).toThrow();
   });
 
-  it("given a valid grid size, if any of the robots objects has and invalid instruction, and error is thrown", () => {
+  it("given a valid grid size, and a list of robots with valid instructions. if any of the robots objects has a valid orientation no error is thrown, but if the orienation is invalid or missing an error is thrown", () => {
     const gridUpperLimit = { x: 50, y: 50 };
 
     const instruction =
@@ -84,17 +88,20 @@ describe("Input-Output Test for validateInput function", () => {
       posStr: position,
     };
 
-    const invalidRobot = {
-      ...robot,
-    };
-    invalidRobot.instStr += "X";
+    const robots = [robot, robot, robot];
 
-    const robots = [robot, invalidRobot, robot];
-
-    const t1 = () => {
+    const t = () => {
       validateInput(gridUpperLimit, robots);
     };
 
-    expect(t1).toThrow();
+    expect(t).not.toThrow();
+
+    robots[0].posStr.o = "x";
+
+    expect(t).toThrow();
+
+    delete robots[0].posStr.o;
+
+    expect(t).toThrow();
   });
 });
