@@ -22,7 +22,6 @@ function setGridUpperRightCoordinates(upperRightCoordinates, state) {
 }
 
 function setInitialPosition(initialCoordinates, state) {
-  state.currentPosition = {};
   state.lost = false;
   state.currentPosition = initialCoordinates;
 }
