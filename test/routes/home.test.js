@@ -7,7 +7,7 @@ describe("/ path", () => {
     const response = await request.get("/");
 
     expect(response.status).toBe(200);
-    expect(response.text).toBe("<h1>Welcome to Martian Robots</h1>");
+    expect(response.text).toBe("Welcome to Martian Robots");
     done();
   });
 });
