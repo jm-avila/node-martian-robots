@@ -16,8 +16,12 @@ function validateInstructions(instructions) {
       (str) => !validInstructions.move[str] && !validInstructions.turn[str]
     )
   ) {
-    const validTurnInstructions = Object.keys(validInstructions.turn);
-    const validMoveInstructions = Object.keys(validInstructions.turn);
+    const validTurnInstructions = JSON.stringify(
+      Object.keys(validInstructions.turn).filter((item) => item !== "change")
+    );
+    const validMoveInstructions = JSON.stringify(
+      Object.keys(validInstructions.move).filter((item) => item !== "change")
+    );
     throw `Please input a valid instruction. Valid instructions are: ${validTurnInstructions} to turn and ${validMoveInstructions} to move`;
   }
 }
@@ -36,6 +40,7 @@ function validateOrientationInput(o) {
   if (!o) throw "Orientation is mandatory.";
   if (!validOrientations[o]) {
     const validOrientationValues = Object.keys(validOrientations);
+
     throw `Please input a valid orientation. Valid orientations are: ${validOrientationValues}`;
   }
 }
