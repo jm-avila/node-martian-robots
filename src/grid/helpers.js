@@ -16,12 +16,12 @@ function generateState() {
   return state;
 }
 
-function setGridUpperRightCoordinates(upperRightCoordinates, state) {
+function setGridUpperRightCoordinates(state, upperRightCoordinates) {
   const { x, y } = upperRightCoordinates;
   state.grid = { x, y };
 }
 
-function setInitialPosition(initialCoordinates, state) {
+function setInitialPosition(state, initialCoordinates) {
   state.lost = false;
   state.currentPosition = initialCoordinates;
 }

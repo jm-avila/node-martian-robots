@@ -17,7 +17,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     const state = setInitialState();
     state.currentPosition.o = E;
     const instructions = L;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
     expect(state.currentPosition.o).toBe(N);
   });
 
@@ -25,7 +25,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     const state = setInitialState();
     state.currentPosition.o = E;
     const instructions = R;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.currentPosition.o).toBe(S);
   });
@@ -37,7 +37,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.y = y;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.currentPosition.y).toBe(y + 1);
   });
@@ -49,7 +49,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.y = y;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.currentPosition.y).toBe(y - 1);
   });
@@ -61,7 +61,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.x = x;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.currentPosition.x).toBe(x + 1);
   });
@@ -73,7 +73,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.x = x;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.currentPosition.x).toBe(x - 1);
   });
@@ -85,7 +85,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.x = x;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.lost).toBe(true);
   });
@@ -97,7 +97,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.x = x;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.lost).toBe(true);
   });
@@ -109,7 +109,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.y = y;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.lost).toBe(true);
   });
@@ -121,7 +121,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.currentPosition.y = y;
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.lost).toBe(true);
   });
@@ -137,7 +137,7 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     state.lostRobotsCoordinates.push(currentPosition);
 
     const instructions = F;
-    executeInstructions(instructions, state);
+    executeInstructions(state, instructions);
 
     expect(state.lost).toBe(false);
   });

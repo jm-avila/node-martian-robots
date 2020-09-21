@@ -10,11 +10,11 @@ const {
 module.exports = function (gridUpperLimit, robots) {
   validateInput(gridUpperLimit, robots);
   const state = generateState();
-  setGridUpperRightCoordinates(gridUpperLimit, state);
+  setGridUpperRightCoordinates(state, gridUpperLimit);
 
   return robots.map(({ posStr, instStr }) => {
-    setInitialPosition(posStr, state);
-    executeInstructions(instStr, state);
+    setInitialPosition(state, posStr);
+    executeInstructions(state, instStr);
     return formatResult(state);
   });
 };

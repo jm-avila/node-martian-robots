@@ -1,18 +1,18 @@
 const { validInstructions } = require("./validValues");
 
-function executeInstructions(instructions, state) {
+function executeInstructions(state, instructions) {
   for (let i = 0; i < instructions.length; i++) {
     if (state.lost) break;
 
     const currentInstruction = instructions[i];
 
     validInstructions.turn[currentInstruction]
-      ? turn(currentInstruction, state)
+      ? turn(state, currentInstruction)
       : move(state);
   }
 }
 
-function turn(instructionString, state) {
+function turn(state, instructionString) {
   const currentOrientation = state.currentPosition.o;
   const newOrientation =
     validInstructions.turn.change[instructionString][currentOrientation];
@@ -22,8 +22,8 @@ function turn(instructionString, state) {
 function move(state) {
   const newCoordinates = getNewCoordinates(state.currentPosition);
   const newCoordinatesWithinGrid = coordinatesInGridLimits(
-    newCoordinates,
-    state
+    state,
+    newCoordinates
   );
 
   if (newCoordinatesWithinGrid) {
@@ -45,7 +45,7 @@ function getNewCoordinates(currentPosition) {
   return newCoordinates;
 }
 
-function coordinatesInGridLimits({ x, y }, state) {
+function coordinatesInGridLimits(state, { x, y }) {
   const upperLimits = x <= state.grid.x && y <= state.grid.y;
   const lowerLimits = x >= 0 && y >= 0;
   return upperLimits && lowerLimits;

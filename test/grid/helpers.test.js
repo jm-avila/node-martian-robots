@@ -38,7 +38,7 @@ describe("Input-Output Test for setGridUpperRightCoordinates", () => {
 
     const state = generateState();
 
-    setGridUpperRightCoordinates(upperRightCoordinates, state);
+    setGridUpperRightCoordinates(state, upperRightCoordinates);
 
     expect(state.grid).toMatchObject(upperRightCoordinates);
   });
@@ -52,7 +52,7 @@ describe("Input-Output Test for setGridUpperRightCoordinates", () => {
 
     const state = generateState();
 
-    setGridUpperRightCoordinates(upperRightCoordinates, state);
+    setGridUpperRightCoordinates(state, upperRightCoordinates);
 
     expect(state.grid).not.toMatchObject(upperRightCoordinates);
     delete upperRightCoordinates.z;
@@ -75,7 +75,7 @@ describe("Input-Output Test for setInitialPosition", () => {
     };
     state.lost = true;
 
-    setInitialPosition(initialCoordinates, state);
+    setInitialPosition(state, initialCoordinates);
 
     expect(state.currentPosition).toMatchObject(initialCoordinates);
     expect(state.lost).toBe(false);
