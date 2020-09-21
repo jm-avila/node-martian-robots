@@ -5,31 +5,38 @@ const {
   validInstructions,
 } = require("../../src/grid/validValues");
 
+const {
+  turn: { L, R },
+  move: { F },
+} = validInstructions;
+
+const { N, S, E, W } = validOrientations;
+
 describe("Input-Output Test for executeInstructions function using a grid size of x=10 and y=10", () => {
   it("When orientation is E turning left updates currentPosition orientation to N.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.E;
-    const instructions = "L";
+    state.currentPosition.o = E;
+    const instructions = L;
     executeInstructions(instructions, state);
-    expect(state.currentPosition.o).toBe(validOrientations.N);
+    expect(state.currentPosition.o).toBe(N);
   });
 
   it("When orientation is E turning left updates currentPosition orientation to S", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.E;
-    const instructions = "R";
+    state.currentPosition.o = E;
+    const instructions = R;
     executeInstructions(instructions, state);
 
-    expect(state.currentPosition.o).toBe(validOrientations.S);
+    expect(state.currentPosition.o).toBe(S);
   });
 
   it("When the orientation is N, moving forward increases y axis value by one.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.N;
+    state.currentPosition.o = N;
     const y = 0;
     state.currentPosition.y = y;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.currentPosition.y).toBe(y + 1);
@@ -37,11 +44,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When the orientation is S, moving forward decreases y axis value by one.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.S;
+    state.currentPosition.o = S;
     const y = 10;
     state.currentPosition.y = y;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.currentPosition.y).toBe(y - 1);
@@ -49,11 +56,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When the orientation is E, moving forward increases x axis value by one.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.E;
+    state.currentPosition.o = E;
     const x = 0;
     state.currentPosition.x = x;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.currentPosition.x).toBe(x + 1);
@@ -61,11 +68,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When the orientation is W, moving forward decreases x axis value by one.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.W;
+    state.currentPosition.o = W;
     const x = 10;
     state.currentPosition.x = x;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.currentPosition.x).toBe(x - 1);
@@ -73,11 +80,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When moving forward increases the x current position by a value greater than the grid x value, lost is set to true.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.E;
+    state.currentPosition.o = E;
     const x = 10;
     state.currentPosition.x = x;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.lost).toBe(true);
@@ -85,11 +92,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When moving forward decreases the x current position by a value less than 0, lost is set to true.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.W;
+    state.currentPosition.o = W;
     const x = 0;
     state.currentPosition.x = x;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.lost).toBe(true);
@@ -97,11 +104,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When moving forward increases the y current position by a value greater than the grid y value, lost is set to true.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.N;
+    state.currentPosition.o = N;
     const y = 10;
     state.currentPosition.y = y;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.lost).toBe(true);
@@ -109,11 +116,11 @@ describe("Input-Output Test for executeInstructions function using a grid size o
 
   it("When moving forward decreases the y current position by a value less than 0, lost is set to true.", () => {
     const state = setInitialState();
-    state.currentPosition.o = validOrientations.S;
+    state.currentPosition.o = S;
     const y = 0;
     state.currentPosition.y = y;
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.lost).toBe(true);
@@ -124,12 +131,12 @@ describe("Input-Output Test for executeInstructions function using a grid size o
     const currentPosition = {
       x: 0,
       y: 0,
-      o: validOrientations.S,
+      o: S,
     };
     state.currentPosition = currentPosition;
     state.lostRobotsCoordinates.push(currentPosition);
 
-    const instructions = "F";
+    const instructions = F;
     executeInstructions(instructions, state);
 
     expect(state.lost).toBe(false);
