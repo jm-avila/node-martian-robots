@@ -65,7 +65,7 @@ line 3
 
 - RFRFRFRF
 
-One Robot was two lines, the first line is the position (x, y, 0) and seconde line are the instructions a robot will follow.
+One Robot was two lines, the first line is the position (x, y, o) and second line are the instructions a robot will follow.
 
 ### Input snippets
 
