@@ -39,7 +39,9 @@ function validateCoordinatesInput(coordinates) {
 function validateOrientationInput(o) {
   if (!o) throw "Orientation is mandatory.";
   if (!validOrientations[o]) {
-    const validOrientationValues = Object.keys(validOrientations);
+    const validOrientationValues = JSON.stringify(
+      Object.keys(validOrientations)
+    );
 
     throw `Please input a valid orientation. Valid orientations are: ${validOrientationValues}`;
   }
