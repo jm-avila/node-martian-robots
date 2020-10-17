@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    image: "martian_web"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    networks:
+      - martian-tier
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - node_martian_db:/data/db
+    networks:
+      - martian-tier
+
+volumes:
+  node_martian_db:
+
+networks:
+  martian-tier:

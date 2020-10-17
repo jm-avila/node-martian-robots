@@ -1,13 +1,10 @@
-require("dotenv").config();
 const mongoose = require("mongoose");
 
 async function connectToDB() {
-  const user = process.env.DB_USER;
-  const password = process.env.DB_PASS;
   const dbname = "test";
 
   await mongoose.connect(
-    `mongodb+srv://${user}:${password}@node-martian-robots.5xh2a.mongodb.net/${dbname}`,
+    `mongodb://mongo:27017/${dbname}`,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
